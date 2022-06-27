@@ -4,7 +4,7 @@
 
 # Twilight.js clash-of-clans-api
 
-Twilight.js clash-of-clans-api for Node.js is an asynchronous library for making requests to the [@Clash of Clans API] (https://developer.clashofclans.com/#/)
+Twilight.js clash-of-clans-api for Node.js is an asynchronous library for making requests to the [@Clash of Clans API](https://developer.clashofclans.com/#/)
 
 
 ## Features
