@@ -1,0 +1,20 @@
+{
+  "name": "twilight-js-clash-of-clans-api",
+  "version": "0.0.1",
+  "description": "Clash of Clans API for Node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/twilight-js/clash-of-clans-api.git"
+  },
+  "author": "SeRzZzJ",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/twilight-js/clash-of-clans-api/issues"
+  },
+  "homepage": "https://github.com/twilight-js/clash-of-clans-api#readme",
+  "type": "module"
+}
