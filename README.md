@@ -20,13 +20,13 @@ Twilight.js clash-of-clans-api for Node.js is an asynchronous library for making
 ```javascript
 import { ClashOfClans } from "./ClashOfClans.js";
 
-const clashOfClans = new ClashOfClans(token);
+const clashOfClans = new ClashOfClans("YOUR API TOKEN");
 clashOfClans.players()
-    .get("23LL0U9QGYR")
+    .get("PLAYER TAG")
     .then((player) => {
-        console.log(player.troops());
-        console.log(player.heroes());
-        console.log(player.spells());
+        player.troops();
+        player.heroes();
+        player.spells();
     });
 ```
 
