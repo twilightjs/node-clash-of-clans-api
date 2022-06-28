@@ -1,5 +1,5 @@
 import { request } from "https";
-import { AccessDenied, PlayerNotFound } from "../exceptions/Exceptions.js";
+import { AccessDenied, NotFoundPlayer, InvalidTag } from "../exceptions/Exceptions.js";
 
 export class Players {
 
@@ -20,7 +20,7 @@ export class Players {
                 });
             });
 
-            req.on(error, err => {
+            req.on("error", err => {
                 reject(err);
             });
 
@@ -29,7 +29,8 @@ export class Players {
     }
 
     #throwExceptions(bodyParse) {
-        if (bodyParse.reason === "notFound") throw new PlayerNotFound("Player not found");
+        if (bodyParse.reason === "notFound" && !(bodyParse.message === undefined)) throw new InvalidTag("Invalid tag");
+        if (bodyParse.reason === "notFound" && bodyParse.message === undefined) throw new NotFoundPlayer("Player not found");
         if (bodyParse.reason === "accessDenied") throw new AccessDenied("Invalid authorization");
     }
 }

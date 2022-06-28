@@ -5,9 +5,16 @@ export class AccessDenied extends Error {
     }
 }
 
-export class PlayerNotFound extends Error{
+export class NotFoundPlayer extends Error{
     constructor(message){
         super(message);
         this.name = "PlayerNotFound";
+    }
+}
+
+export class InvalidTag extends Error {
+    constructor(message){
+        super(message);
+        this.name = "TagNotFound";
     }
 }
