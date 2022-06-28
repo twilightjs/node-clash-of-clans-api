@@ -1,5 +1,5 @@
 import { request } from "https";
-import { AccessDenied } from "../exceptions/AccessDenied.js";
+import { AccessDenied, PlayerNotFound } from "../exceptions/Exceptions.js";
 
 export class Players {
 
@@ -9,21 +9,28 @@ export class Players {
 
     get(tag) {
         return new Promise((resolve, reject) => {
-            this._options.path = `/v1/players/%${tag}`;
+            const encodePath = encodeURI(`/v1/players/${tag}`);
+            this._options.path = encodePath;
             this._options.method = "GET";
             const req = request(this._options, (res) => {
-                res.on('data', res => {
-                    if (res.reason === "accessDenied") throw new AccessDenied("Invalid authorization");
-                    resolve(new Player(JSON.parse(res.toString())));
+                res.on("data", body => {
+                    const bodyParse = JSON.parse(body.toString());
+                    this.#throwExceptions(bodyParse);
+                    resolve(new Player(bodyParse));
                 });
             });
 
-            req.on('error', err => {
+            req.on(error, err => {
                 reject(err);
             });
 
             req.end();
         });
+    }
+
+    #throwExceptions(bodyParse) {
+        if (bodyParse.reason === "notFound") throw new PlayerNotFound("Player not found");
+        if (bodyParse.reason === "accessDenied") throw new AccessDenied("Invalid authorization");
     }
 }
 
