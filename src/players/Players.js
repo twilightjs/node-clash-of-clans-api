@@ -8,14 +8,14 @@ export class Players {
     }
 
     get(tag) {
-        return new Promise((resolve, reject) => {
+        return (new Promise((resolve, reject) => {
             const encodePath = encodeURI(`/v1/players/${tag}`);
             this._options.path = encodePath;
             this._options.method = "GET";
             const req = request(this._options, (res) => {
                 res.on("data", body => {
                     const bodyParse = JSON.parse(body.toString());
-                    this.#throwExceptions(bodyParse);
+                    this.#throwExceptions(bodyParse, reject);
                     resolve(new Player(bodyParse));
                 });
             });
@@ -25,13 +25,13 @@ export class Players {
             });
 
             req.end();
-        });
+        })).catch();
     }
 
-    #throwExceptions(bodyParse) {
-        if (bodyParse.reason === "notFound" && !(bodyParse.message === undefined)) throw new InvalidTag("Invalid tag");
-        if (bodyParse.reason === "notFound" && bodyParse.message === undefined) throw new NotFoundPlayer("Player not found");
-        if (bodyParse.reason === "accessDenied") throw new AccessDenied("Invalid authorization");
+    #throwExceptions(bodyParse, reject) {
+        if (bodyParse.reason === "notFound" && !(bodyParse.message === undefined)) reject(new InvalidTag("Invalid tag"));
+        if (bodyParse.reason === "notFound" && bodyParse.message === undefined) reject(new NotFoundPlayer("Player not found"));
+        if (bodyParse.reason === "accessDenied") reject(new AccessDenied("Invalid authorization"));
     }
 }
 
